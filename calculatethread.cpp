@@ -1,42 +1,67 @@
 #include "calculatethread.h"
+#include <cmath>
 
-CalculateThread::CalculateThread(float ** data)
+CalculateThread::CalculateThread(QVector<double> * array)
 {
- this->data=data;
+    this->array=array;
+    QVector<double> x,y;
+    this->array[0]=x;
+    this->array[1]=y;
 }
 
 void CalculateThread::run(){
-    rungeKutta(0,0,100,0.01);
+    rungeKutta(10,0,1000,0.01);
 }
 
-// A differential equation "dy/dx = ..."
-float CalculateThread:: dydx(float x, float y)
+// A differential equation "dx/dt = ..."
+double CalculateThread:: dydx_coord(double t, double v)
 {
-    return((x - y)/2);
+    return(v);
 }
+
+// A differential equation "dx/dt = ..."
+double CalculateThread:: dydx_spd(double t, double x,double v)
+{
+    using namespace std;
+    return(-2*v-100*sin(x));
+}
+
 
 // and initial value y0 at x0.
-void CalculateThread::rungeKutta(float x0, float y0,int n, float h)
+void CalculateThread::rungeKutta(double v0, double x0, double n, double h)
 {
-    float k1, k2, k3, k4;
+    double k1, k2, k3, k4;
 
     // Iterate for number of iterations
-    float y = y0;
+    double x = x0;
+    double v= v0;
+    double t0=0;
     for (int i=1; i<=n; i++)
     {
         // Apply Runge Kutta Formulas to find
         // next value of y
-        k1 = h*dydx(x0, y);
-        k2 = h*dydx(x0 + 0.5*h, y + 0.5*k1);
-        k3 = h*dydx(x0 + 0.5*h, y + 0.5*k2);
-        k4 = h*dydx(x0 + h, y + k3);
+        k1 = h*dydx_spd(t0, x,v);
+        k2 = h*dydx_spd(t0 + 0.5*h, x + 0.5*k1,v);
+        k3 = h*dydx_spd(t0 + 0.5*h, x + 0.5*k2,v);
+        k4 = h*dydx_spd(t0 + h, x + k3,v);
 
         // Update next value of y
-        y = y + (1.0/6.0)*(k1 + 2*k2 + 2*k3 + k4);;
+        v = v + (1.0/6.0)*(k1 + 2*k2 + 2*k3 + k4);
+
+        // Apply Runge Kutta Formulas to find
+        // next value of y
+        k1 = h*dydx_coord(t0, v);
+        k2 = h*dydx_coord(t0 + 0.5*h, v + 0.5*k1);
+        k3 = h*dydx_coord(t0 + 0.5*h, v + 0.5*k2);
+        k4 = h*dydx_coord(t0 + h, v + k3);
+
+        // Update next value of y
+        x = x + (1.0/6.0)*(k1 + 2*k2 + 2*k3 + k4);
 
         // Update next value of x
-        x0 = x0 + h;
-        this->data[i][0]=x0;
-        this->data[i][1]=y;
+        t0 = t0 + h;
+        this->array[0].push_back(t0);
+        this->array[1].push_back(x);
+
     }
 }
