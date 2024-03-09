@@ -15,7 +15,11 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+private slots:
+    void on_pushButton_clicked();
+
 private:
+    QVector<double> * result = new QVector<double>[2];
     Ui::MainWindow *ui;
 };
 #endif // MAINWINDOW_H

@@ -4,13 +4,10 @@
 CalculateThread::CalculateThread(QVector<double> * array)
 {
     this->array=array;
-    QVector<double> x,y;
-    this->array[0]=x;
-    this->array[1]=y;
 }
 
 void CalculateThread::run(){
-    rungeKutta(10,0,1000,0.01);
+    rungeKutta(10,0,10,0.01);
 }
 
 // A differential equation "dx/dt = ..."
@@ -28,15 +25,15 @@ double CalculateThread:: dydx_spd(double t, double x,double v)
 
 
 // and initial value y0 at x0.
-void CalculateThread::rungeKutta(double v0, double x0, double n, double h)
+void CalculateThread::rungeKutta(double v0, double x0, double t_max, double h)
 {
     double k1, k2, k3, k4;
-
+    unsigned long int n=(long)(t_max/h);
     // Iterate for number of iterations
     double x = x0;
     double v= v0;
     double t0=0;
-    for (int i=1; i<=n; i++)
+    for (unsigned long  i=1; i<=n; i++)
     {
         // Apply Runge Kutta Formulas to find
         // next value of y

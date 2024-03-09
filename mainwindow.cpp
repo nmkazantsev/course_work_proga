@@ -3,6 +3,7 @@
 #include "calculatethread.h"
 #include <QMainWindow>
 #include <QVector>
+#include <QPen>
 
 void delay()
 {
@@ -16,20 +17,30 @@ MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::MainWindow)
 {
-    QVector<double> * result = new QVector<double>[2];
-    CalculateThread calculateThread(result);
-    calculateThread.run();
     ui->setupUi(this);
-    delay();
-    ui->widget->addGraph();
-    ui->widget->graph(0)->addData(result[0],result[1]);
-    ui->widget->rescaleAxes();
-    ui->widget->replot();
-
+    result[0]=QVector<double>();
+    result[1]=QVector<double>();
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+
+void MainWindow::on_pushButton_clicked()
+{
+    result[0].erase(result[0].begin(),result[0].end());
+    result[1].erase(result[1].begin(),result[1].end());
+    CalculateThread calculateThread(result);
+    calculateThread.run();
+    ui->widget->addGraph();
+    ui->widget->graph(0)->addData(result[0],result[1]);
+    ui->widget->graph(0)->setAntialiased(true);
+    QPen pen = QPen(QColor(100, 100, 255));
+    pen.setWidthF(2);
+    ui->widget->graph(0)->setPen(pen);
+    ui->widget->rescaleAxes();
+    ui->widget->replot();
 }
 
