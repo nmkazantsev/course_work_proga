@@ -23,5 +23,6 @@ private slots:
 private:
     QVector<double> * result = new QVector<double>[2];
     Ui::MainWindow *ui;
+    double sigma, w2, t_end, step, V0, X0;
 };
 #endif // MAINWINDOW_H

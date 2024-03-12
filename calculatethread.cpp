@@ -1,13 +1,20 @@
 #include "calculatethread.h"
 #include <cmath>
 
-CalculateThread::CalculateThread(QVector<double> * array)
+CalculateThread::CalculateThread(QVector<double> * array, double sigma,
+                                 double w2, double t_end, double step, double X0, double V0)
 {
     this->array=array;
+    this->sigma=sigma;
+    this->w2=w2;
+    this->t_end=t_end;
+    this->step=step;
+    this->V0=V0;
+    this->X0=X0;
 }
 
 void CalculateThread::run(){
-    rungeKutta(10,0,10,0.01);
+    rungeKutta(V0,X0,t_end,step);
 }
 
 // A differential equation "dx/dt = ..."
@@ -20,7 +27,7 @@ double CalculateThread:: dydx_coord(double t, double v)
 double CalculateThread:: dydx_spd(double t, double x,double v)
 {
     using namespace std;
-    return(-2*v-100*sin(x));
+    return(-2*sigma*v-w2*sin(x));
 }
 
 

@@ -15,30 +15,6 @@
   </property>
   <widget class="QWidget" name="centralwidget">
    <layout class="QGridLayout" name="gridLayout">
-    <item row="1" column="1">
-     <widget class="QLineEdit" name="lineEdit"/>
-    </item>
-    <item row="1" column="3">
-     <widget class="QLineEdit" name="lineEdit_4">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="2">
-     <widget class="QLabel" name="label_3">
-      <property name="text">
-       <string>t end</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="3">
-     <widget class="QLineEdit" name="lineEdit_3">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
     <item row="3" column="0">
      <widget class="QLabel" name="label_2">
       <property name="text">
@@ -46,17 +22,7 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="0">
-     <widget class="QLabel" name="label">
-      <property name="text">
-       <string>sigma</string>
-      </property>
-     </widget>
-    </item>
-    <item row="3" column="1">
-     <widget class="QLineEdit" name="lineEdit_2"/>
-    </item>
-    <item row="3" column="4">
+    <item row="3" column="6">
      <widget class="QPushButton" name="pushButton">
       <property name="text">
        <string>calculate</string>
@@ -70,22 +36,76 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="4">
+    <item row="1" column="6">
      <widget class="QRadioButton" name="radioButton">
       <property name="text">
        <string>x(t)</string>
       </property>
      </widget>
     </item>
-    <item row="2" column="4">
+    <item row="1" column="3">
+     <widget class="QLineEdit" name="step">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string>sigma</string>
+      </property>
+     </widget>
+    </item>
+    <item row="2" column="6">
      <widget class="QRadioButton" name="radioButton_2">
       <property name="text">
        <string>фазов. диагр</string>
       </property>
      </widget>
     </item>
-    <item row="0" column="0" colspan="5">
+    <item row="3" column="2">
+     <widget class="QLabel" name="label_3">
+      <property name="text">
+       <string>t end</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="1">
+     <widget class="QLineEdit" name="w_square"/>
+    </item>
+    <item row="1" column="1">
+     <widget class="QLineEdit" name="sigma"/>
+    </item>
+    <item row="3" column="3">
+     <widget class="QLineEdit" name="t_end">
+      <property name="text">
+       <string/>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0" colspan="7">
      <widget class="QCustomPlot" name="widget" native="true"/>
+    </item>
+    <item row="1" column="5">
+     <widget class="QLineEdit" name="x0"/>
+    </item>
+    <item row="3" column="5">
+     <widget class="QLineEdit" name="v0"/>
+    </item>
+    <item row="1" column="4">
+     <widget class="QLabel" name="label_5">
+      <property name="text">
+       <string>X0</string>
+      </property>
+     </widget>
+    </item>
+    <item row="3" column="4">
+     <widget class="QLabel" name="label_6">
+      <property name="text">
+       <string>V0</string>
+      </property>
+     </widget>
     </item>
    </layout>
   </widget>
