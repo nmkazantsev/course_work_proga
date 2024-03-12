@@ -9,14 +9,16 @@ QT_END_NAMESPACE
 
 class MainWindow : public QMainWindow
 {
-    Q_OBJECT
-
+ Q_OBJECT
 public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void callBack();
+    void buildGraph();
 private slots:
     void on_pushButton_clicked();
+    //void buildGraph();
 
 private:
     QVector<double> * result = new QVector<double>[2];

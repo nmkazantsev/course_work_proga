@@ -59,6 +59,6 @@ void CalculateThread::rungeKutta(double v0, double x0, double t_max, double h)
         t0 = t0 + h;
         this->array[0].push_back(t0);
         this->array[1].push_back(x);
-
     }
+    //emit calculation_Finished();
 }

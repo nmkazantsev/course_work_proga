@@ -27,13 +27,21 @@ MainWindow::~MainWindow()
     delete ui;
 }
 
+void test(){
 
+}
 void MainWindow::on_pushButton_clicked()
 {
     result[0].erase(result[0].begin(),result[0].end());
     result[1].erase(result[1].begin(),result[1].end());
     CalculateThread calculateThread(result);
+    //QObject::connect(&calculateThread, SIGNAL(calculation_Finished),this,SLOT(buildGraph));
     calculateThread.run();
+    delay();
+    buildGraph();
+
+}
+void  MainWindow:: buildGraph(){
     ui->widget->addGraph();
     ui->widget->graph(0)->addData(result[0],result[1]);
     ui->widget->graph(0)->setAntialiased(true);
