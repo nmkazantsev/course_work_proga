@@ -28,7 +28,7 @@ double CalculateThread:: dydx_spd(double sigma, double w2, double t, double x,do
 // and initial value y0 at x0.
 void CalculateThread::startCalcualation(double sigma, double w2, double v0, double x0, double t_max, double h)
 {
-    double k1, k2, k3, k4;
+    double k1, k2, k3, k4,kv1, kv2, kv3, kv4;
     unsigned long int n=(long)(t_max/h);
     // Iterate for number of iterations
     double x = x0;
@@ -40,21 +40,22 @@ void CalculateThread::startCalcualation(double sigma, double w2, double v0, doub
     {
         // Apply Runge Kutta Formulas to find
         // next value of y
-        k1 = h*dydx_spd(sigma, w2, t0, x,v);
-        k2 = h*dydx_spd(sigma, w2, t0 + 0.5*h, x + 0.5*k1,v);
-        k3 = h*dydx_spd(sigma, w2, t0 + 0.5*h, x + 0.5*k2,v);
-        k4 = h*dydx_spd(sigma, w2, t0 + h, x + k3,v);
+        kv1 = h*dydx_spd(sigma, w2, t0, x,v);
+        k1 = h*dydx_coord(t0, v);
 
+        kv2 = h*dydx_spd(sigma, w2, t0 + 0.5*h, x + 0.5*k1,v + 0.5*kv1);
+        k2 = h*dydx_coord(t0 + 0.5*h, v + 0.5*kv1);
+
+        kv3 = h*dydx_spd(sigma, w2, t0 + 0.5*h, x + 0.5*k2,v + 0.5*kv2);
+        k3 = h*dydx_coord(t0 + 0.5*h, v + 0.5*kv2);
+
+        kv4 = h*dydx_spd(sigma, w2, t0 + h, x + k3,v + kv3);
+        k4 = h*dydx_coord(t0 + h, v + k3);
         // Update next value of y
-        v = v + (1.0/6.0)*(k1 + 2*k2 + 2*k3 + k4);
+        v = v + (1.0/6.0)*(kv1 + 2*kv2 + 2*kv3 + kv4);
 
         // Apply Runge Kutta Formulas to find
         // next value of y
-        k1 = h*dydx_coord(t0, v);
-        k2 = h*dydx_coord(t0 + 0.5*h, v + 0.5*k1);
-        k3 = h*dydx_coord(t0 + 0.5*h, v + 0.5*k2);
-        k4 = h*dydx_coord(t0 + h, v + k3);
-
         // Update next value of y
         x = x + (1.0/6.0)*(k1 + 2*k2 + 2*k3 + k4);
 
