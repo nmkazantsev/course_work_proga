@@ -43,11 +43,6 @@ void MainWindow::on_pushButton_clicked()
     auto step =  ui->step->value();
     auto V0 =  ui->v0->value();
     auto X0 =  ui->x0->value();
-    if(sigma*w2*t_end*step == 0){
-        QMessageBox msgBox;
-        msgBox.setText("Try again. \nUse '.' instead of ','");
-        msgBox.exec();
-    }
     emit startCalcualation(sigma, w2, V0, X0, t_end, step);
 }
 void  MainWindow:: buildGraph(QVector<double> keys, QVector<double> values)
