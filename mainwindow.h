@@ -1,6 +1,7 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
+#include "calculatethread.h"
 #include <QMainWindow>
 
 QT_BEGIN_NAMESPACE
@@ -15,14 +16,18 @@ public:
     ~MainWindow();
 
     void callBack();
-    void buildGraph();
+
+signals:
+    void startCalcualation(double sigma, double w2, double v0, double x0, double t_max, double h);
+
 private slots:
     void on_pushButton_clicked();
-    //void buildGraph();
+    void buildGraph(QVector<double> keys, QVector<double> values);
 
 private:
-    QVector<double> * result = new QVector<double>[2];
+    QThread *_thread;
+    CalculateThread *_solver;
+
     Ui::MainWindow *ui;
-    double sigma, w2, t_end, step, V0, X0;
 };
 #endif // MAINWINDOW_H

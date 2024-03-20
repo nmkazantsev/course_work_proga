@@ -18,8 +18,16 @@ MainWindow::MainWindow(QWidget *parent)
     , ui(new Ui::MainWindow)
 {
     ui->setupUi(this);
-    result[0]=QVector<double>();
-    result[1]=QVector<double>();
+
+    _thread = new QThread();
+    _solver = new CalculateThread();
+    _solver->moveToThread(_thread);
+
+    QObject::connect(ui->pushButton, &QPushButton::clicked, this, &MainWindow::on_pushButton_clicked);
+    QObject::connect(this, &MainWindow::startCalcualation, _solver, &CalculateThread::startCalcualation, Qt::QueuedConnection);
+    QObject::connect(_solver, &CalculateThread::calculationFinished, this, &MainWindow::buildGraph, Qt::QueuedConnection);
+
+    _thread->start();
 }
 
 MainWindow::~MainWindow()
@@ -29,32 +37,26 @@ MainWindow::~MainWindow()
 
 void MainWindow::on_pushButton_clicked()
 {
-    sigma =  ui->sigma->text().toDouble();
-    w2 =  ui->w_square->text().toDouble();
-    t_end =  ui->t_end->text().toDouble();
-    step =  ui->step->text().toDouble();
-    V0 =  ui->v0->text().toDouble();
-    X0 =  ui->x0->text().toDouble();
-    if(sigma*w2*t_end*step==0){
+    auto sigma =  ui->sigma->value();
+    auto w2 =  ui->w_square->value();
+    auto t_end =  ui->t_end->value();
+    auto step =  ui->step->value();
+    auto V0 =  ui->v0->value();
+    auto X0 =  ui->x0->value();
+    if(sigma*w2*t_end*step == 0){
         QMessageBox msgBox;
         msgBox.setText("Try again. \nUse '.' instead of ','");
         msgBox.exec();
     }
-    result[0].erase(result[0].begin(),result[0].end());
-    result[1].erase(result[1].begin(),result[1].end());
-    CalculateThread calculateThread(result, sigma, w2,t_end, step,X0, V0);
-    //QObject::connect(&calculateThread, SIGNAL(calculation_Finished),this,SLOT(buildGraph));
-    calculateThread.run();
-    delay();
-    buildGraph();
-
+    emit startCalcualation(sigma, w2, V0, X0, t_end, step);
 }
-void  MainWindow:: buildGraph(){
+void  MainWindow:: buildGraph(QVector<double> keys, QVector<double> values)
+{
     if(ui->widget->graphCount()>0){
         ui->widget->removeGraph(0);
     }
     ui->widget->addGraph();
-    ui->widget->graph(0)->addData(result[0],result[1]);
+    ui->widget->graph(0)->addData(keys,values);
     ui->widget->graph(0)->setAntialiased(true);
     QPen pen = QPen(QColor(100, 100, 255));
     pen.setWidthF(2);

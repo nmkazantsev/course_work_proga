@@ -43,13 +43,6 @@
       </property>
      </widget>
     </item>
-    <item row="1" column="3">
-     <widget class="QLineEdit" name="step">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
     <item row="1" column="0">
      <widget class="QLabel" name="label">
       <property name="text">
@@ -71,27 +64,8 @@
       </property>
      </widget>
     </item>
-    <item row="3" column="1">
-     <widget class="QLineEdit" name="w_square"/>
-    </item>
-    <item row="1" column="1">
-     <widget class="QLineEdit" name="sigma"/>
-    </item>
-    <item row="3" column="3">
-     <widget class="QLineEdit" name="t_end">
-      <property name="text">
-       <string/>
-      </property>
-     </widget>
-    </item>
     <item row="0" column="0" colspan="7">
      <widget class="QCustomPlot" name="widget" native="true"/>
-    </item>
-    <item row="1" column="5">
-     <widget class="QLineEdit" name="x0"/>
-    </item>
-    <item row="3" column="5">
-     <widget class="QLineEdit" name="v0"/>
     </item>
     <item row="1" column="4">
      <widget class="QLabel" name="label_5">
@@ -106,6 +80,41 @@
        <string>V0</string>
       </property>
      </widget>
+    </item>
+    <item row="1" column="1">
+     <widget class="QDoubleSpinBox" name="sigma">
+      <property name="minimum">
+       <double>0.000000000000000</double>
+      </property>
+      <property name="maximum">
+       <double>999999.989999999990687</double>
+      </property>
+      <property name="singleStep">
+       <double>0.010000000000000</double>
+      </property>
+      <property name="value">
+       <double>0.100000000000000</double>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="3">
+     <widget class="QDoubleSpinBox" name="step">
+      <property name="decimals">
+       <number>4</number>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="5">
+     <widget class="QDoubleSpinBox" name="x0"/>
+    </item>
+    <item row="3" column="1">
+     <widget class="QDoubleSpinBox" name="w_square"/>
+    </item>
+    <item row="3" column="3">
+     <widget class="QDoubleSpinBox" name="t_end"/>
+    </item>
+    <item row="3" column="5">
+     <widget class="QDoubleSpinBox" name="v0"/>
     </item>
    </layout>
   </widget>
