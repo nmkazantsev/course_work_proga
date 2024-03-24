@@ -12,7 +12,7 @@ public:
      virtual ~CalculateThread();
 
 signals:
-   void calculationFinished(QVector<double> keys, QVector<double> values);
+   void calculationFinished(QVector<double> keys, QVector<double> values, QVector<double> DX);
 
 public slots:
    void startCalcualation(double sigma, double w2, double t_end, double step, double X0, double V0);

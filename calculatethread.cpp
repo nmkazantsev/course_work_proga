@@ -34,8 +34,9 @@ void CalculateThread::startCalcualation(double sigma, double w2, double v0, doub
     double x = x0;
     double v = v0;
     double t0 = 0;
-    QVector<double> keys;
-    QVector<double> values;
+    QVector<double> T;//время
+    QVector<double> X;//угол
+    QVector<double> DX;//угловая скорость
     for (unsigned long  i=1; i<=n; i++)
     {
         kv1 = h*dydx_spd(sigma, w2, t0, x,v);
@@ -53,8 +54,9 @@ void CalculateThread::startCalcualation(double sigma, double w2, double v0, doub
          v = v + (1.0/6.0)*(kv1 + 2*kv2 + 2*kv3 + kv4);
          x = x + (1.0/6.0)*(k1 + 2*k2 + 2*k3 + k4);
          t0 = t0 + h;
-         keys.push_back(t0);
-         values.push_back(x);
+         DX.push_back(v);
+         T.push_back(t0);
+         X.push_back(x);
     }
-    emit calculationFinished(keys, values);
+    emit calculationFinished(T, X, DX);
 }

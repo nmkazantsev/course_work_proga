@@ -26,9 +26,12 @@
      </widget>
     </item>
     <item row="1" column="9">
-     <widget class="QRadioButton" name="radioButton">
+     <widget class="QRadioButton" name="x_t">
       <property name="text">
        <string>x(t)</string>
+      </property>
+      <property name="checked">
+       <bool>true</bool>
       </property>
      </widget>
     </item>
@@ -153,7 +156,7 @@
      </widget>
     </item>
     <item row="2" column="9">
-     <widget class="QRadioButton" name="radioButton_2">
+     <widget class="QRadioButton" name="phase">
       <property name="text">
        <string>фазов. диагр</string>
       </property>

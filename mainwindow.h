@@ -3,7 +3,8 @@
 
 #include "calculatethread.h"
 #include <QMainWindow>
-
+#include <QVector>
+#include <qcustomplot.h>
 QT_BEGIN_NAMESPACE
 namespace Ui { class MainWindow; }
 QT_END_NAMESPACE
@@ -22,12 +23,17 @@ signals:
 
 private slots:
     void on_pushButton_clicked();
-    void buildGraph(QVector<double> keys, QVector<double> values);
+    void buildGraph(QVector<double> keys, QVector<double> values,QVector<double> DX);
+
+    void on_phase_clicked();
+
+    void on_x_t_clicked();
 
 private:
     QThread *_thread;
     CalculateThread *_solver;
-
     Ui::MainWindow *ui;
+    QVector<double> T,X,DX;
+    QCPCurve *phase=NULL;
 };
 #endif // MAINWINDOW_H

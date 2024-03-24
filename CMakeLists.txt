@@ -29,6 +29,7 @@ set(SOURCES
 set(HEADERS
     calculatethread.h
     qcustomplot.h
+    mainwindow.h
 )
 
 set(FORMS
