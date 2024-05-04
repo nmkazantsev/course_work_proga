@@ -5,7 +5,7 @@
 TEMPLATE = app
 TARGET = course_proga
 INCLUDEPATH += .
-QT += gui widgets
+QT += gui widgets charts
 
 # You can make your code fail to compile if you use deprecated APIs.
 # In order to do so, uncomment the following line.
@@ -16,4 +16,5 @@ QT += gui widgets
 
 # Input
 SOURCES += main.cpp
+CONFIG += qwt
 
