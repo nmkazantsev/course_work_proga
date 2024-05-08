@@ -3,6 +3,9 @@
 #include "calculatethread.h"
 #include <QMainWindow>
 #include <QPen>
+#include <fstream>
+#include <string>
+#include <iostream>
 
 
 void delay()
@@ -53,10 +56,10 @@ void  MainWindow:: buildGraph(QVector<double> keys, QVector<double> values, QVec
     }
     this->T.clear();
     this->X.clear();
-    this->DX.clear();
+    this->FI.clear();
     this->T=keys;
     this->X=values;
-    this->DX=DX;
+    this->FI=DX;
     if(phase!=NULL){
         phase->data()->clear();
     }
@@ -82,9 +85,9 @@ void MainWindow::on_phase_clicked()
     phase->data()->clear();
     }
     phase = new QCPCurve(ui->widget->xAxis, ui->widget->yAxis);
-    QVector<QCPCurveData> pahse_data(DX.size());
-    for(long int i=0;i<DX.size();i++){
-        pahse_data[i]=QCPCurveData(i,X[i],DX[i]);
+    QVector<QCPCurveData> pahse_data(FI.size());
+    for(long int i=0;i<FI.size();i++){
+        pahse_data[i]=QCPCurveData(i,X[i],FI[i]);
     }
      phase->data()->set(pahse_data,true);
      ui->widget->rescaleAxes();
@@ -108,5 +111,37 @@ void MainWindow::on_x_t_clicked()
     ui->widget->graph(0)->setPen(pen);
     ui->widget->rescaleAxes();
     ui->widget->replot();
+}
+
+
+void MainWindow::on_pushButton_2_clicked()
+{
+    QDialog dlg(this);
+    dlg.setWindowTitle(tr("Export results"));
+
+    QLineEdit *ledit1 = new QLineEdit(&dlg);
+
+    QDialogButtonBox *btn_box = new QDialogButtonBox(&dlg);
+    btn_box->setStandardButtons(QDialogButtonBox::Ok | QDialogButtonBox::Cancel);
+
+    connect(btn_box, &QDialogButtonBox::accepted, &dlg, &QDialog::accept);
+    connect(btn_box, &QDialogButtonBox::rejected, &dlg, &QDialog::reject);
+
+    QFormLayout *layout = new QFormLayout();
+    layout->addRow(tr("Export path:"), ledit1);
+    layout->addWidget(btn_box);
+
+    dlg.setLayout(layout);
+
+    // В случае, если пользователь нажал "Ok".
+    if(dlg.exec() == QDialog::Accepted) {
+        const QString &path = ledit1->text();
+        std::ofstream out(path.toStdString());
+        out<<"time,x,angle\n";
+        for(long int i=0;i<T.size();i++){
+            out<<T.at(i)<<','<<X.at(i)<<','<<FI.at(i)<<'\n';
+        }
+        out.close();
+    }
 }
 

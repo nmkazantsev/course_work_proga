@@ -29,11 +29,13 @@ private slots:
 
     void on_x_t_clicked();
 
+    void on_pushButton_2_clicked();
+
 private:
     QThread *_thread;
     CalculateThread *_solver;
     Ui::MainWindow *ui;
-    QVector<double> T,X,DX;
+    QVector<double> T,X,FI;
     QCPCurve *phase=NULL;
 };
 #endif // MAINWINDOW_H
